@@ -1,5 +1,6 @@
 package ash.tick;
 
+#if flash
 import flash.display.DisplayObject;
 import flash.events.Event;
 import flash.Lib;
@@ -67,3 +68,5 @@ class FrameTickProvider implements ITickProvider
         signal.dispatch(frameTime * timeAdjustment);
     }
 }
+
+#end
