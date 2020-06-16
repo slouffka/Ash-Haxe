@@ -1,10 +1,61 @@
 package ash.tick;
 
+#if !server
 import flash.display.DisplayObject;
 import flash.events.Event;
+#end
 
 import ash.signals.Signal1;
 
+#if server
+class FixedTickProviderNew implements ITickProvider
+{
+    private var timer:Timer = new Timer();
+    private var timePerFrame:Float = 0;
+    private var timeSinceLastUpdate:Float = 0;
+    private var timeAdjustment:Float = 1;
+    private var signal:Signal1<Float>;
+
+    public var playing(default, null):Bool;
+
+    public function new(frameTime:Float = Math.floor(1000.0 / 60.0))
+    {
+        playing = false;
+        signal = new Signal1<Float>();
+        timePerFrame = frameTime;
+    }
+
+    public function add(listener:Float->Void):Void
+    {
+        signal.add(listener);
+    }
+
+    public function remove(listener:Float->Void):Void
+    {
+        signal.remove(listener);
+    }
+
+    public function start():Void
+    {
+        var timer = new haxe.Timer(timePerFrame); // 1000ms delay
+        timer.run = dispatchTick;
+        playing = true;
+    }
+
+    public function stop():Void
+    {
+        playing = false;
+        timer.stop();
+    }
+
+    private function dispatchTick():Void
+    {
+        signal.dispatch(timePerFrame * timeAdjustment);
+    }
+}
+#end
+
+#if !server
 /**
  * Uses the enter frame event to provide a frame tick with a fixed frame duration. This tick ignores the length of
  * the frame and dispatches the same time period for each tick.
@@ -58,3 +109,4 @@ class FixedTickProvider implements ITickProvider
         signal.dispatch(frameTime * timeAdjustment);
     }
 }
+#end

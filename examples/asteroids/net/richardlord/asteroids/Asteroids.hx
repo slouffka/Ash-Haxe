@@ -1,6 +1,5 @@
 package net.richardlord.asteroids;
 
-#if flash
 import flash.display.DisplayObjectContainer;
 
 import ash.tick.ITickProvider;
@@ -63,5 +62,3 @@ class Asteroids
         tickProvider.start();
     }
 }
-
-#end

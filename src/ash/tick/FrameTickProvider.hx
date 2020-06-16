@@ -1,6 +1,6 @@
 package ash.tick;
 
-#if flash
+#if !server
 import flash.display.DisplayObject;
 import flash.events.Event;
 import flash.Lib;
