@@ -4,6 +4,7 @@ import flash.display.DisplayObjectContainer;
 
 import ash.tick.ITickProvider;
 import ash.tick.FrameTickProvider;
+import ash.tick.FixedTickProvider;
 import ash.core.Engine;
 
 import net.richardlord.asteroids.systems.BulletAgeSystem;
@@ -57,7 +58,11 @@ class Asteroids
 
     public function start():Void
     {
-        tickProvider = new FrameTickProvider( container );
+        /* tickProvider = new FrameTickProvider( container );
+        tickProvider.add(engine.update);
+        tickProvider.start(); */
+
+        tickProvider = new FixedTickProvider(1000.0 / 60.0);
         tickProvider.add(engine.update);
         tickProvider.start();
     }

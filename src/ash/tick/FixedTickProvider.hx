@@ -10,9 +10,9 @@ import ash.signals.Signal1;
 #if server
 import haxe.Timer;
 
-class FixedTickProviderNew implements ITickProvider
+class FixedTickProvider implements ITickProvider
 {
-    private var timer:Timer = new Timer();
+    private var timer:Timer;
     private var timePerFrame:Float = 0;
     private var timeSinceLastUpdate:Float = 0;
     private var timeAdjustment:Float = 1;
@@ -39,7 +39,7 @@ class FixedTickProviderNew implements ITickProvider
 
     public function start():Void
     {
-        var timer = new haxe.Timer(timePerFrame); // 1000ms delay
+        var timer = new Timer(timePerFrame); // 1000ms delay
         timer.run = dispatchTick;
         playing = true;
     }
