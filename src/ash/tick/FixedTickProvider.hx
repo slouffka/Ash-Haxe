@@ -7,7 +7,7 @@ import flash.events.Event;
 
 import ash.signals.Signal1;
 
-#if !server
+#if server
 import haxe.Timer;
 
 class FixedTickProvider implements ITickProvider
@@ -62,7 +62,7 @@ class FixedTickProvider implements ITickProvider
  * Uses the enter frame event to provide a frame tick with a fixed frame duration. This tick ignores the length of
  * the frame and dispatches the same time period for each tick.
  */
-class FixedTickProviderFlash implements ITickProvider
+class FixedTickProvider implements ITickProvider
 {
     private var displayObject:DisplayObject;
     private var frameTime:Float;
