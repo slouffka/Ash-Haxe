@@ -8,6 +8,8 @@ import flash.events.Event;
 import ash.signals.Signal1;
 
 #if server
+import haxe.Timer;
+
 class FixedTickProviderNew implements ITickProvider
 {
     private var timer:Timer = new Timer();
