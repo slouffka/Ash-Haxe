@@ -12,19 +12,22 @@ import haxe.Timer;
 
 class FixedTickProvider implements ITickProvider
 {
-    private var timer:Timer;
-    private var timePerFrame:Int = 0;
-    private var timeSinceLastUpdate:Float = 0;
-    private var timeAdjustment:Float = 1;
-    private var signal:Signal1<Float>;
-
     public var playing(default, null):Bool;
 
-    public function new(frameTime:Float = 1000.0 / 60.0)
+    private var timer:Timer;
+    private var timePerFrame:Float = (1000.0 / 60.0) / 1000.0; // time in seconds
+    private var timerInterval:Int = Std.int(timePerFrame * 1000); // same time in ms
+    private var timeSinceLastUpdate:Float = 0;
+    private var signal:Signal1<Float>;
+
+    private var timeAdjustment:Float = 1;
+
+    public function new(timePerFrame:Float)
     {
         playing = false;
         signal = new Signal1<Float>();
-        timePerFrame = Std.int(frameTime);
+        this.timePerFrame = timePerFrame;
+        this.timerInterval = Std.int(timePerFrame * 1000);
     }
 
     public function add(listener:Float->Void):Void
@@ -39,7 +42,7 @@ class FixedTickProvider implements ITickProvider
 
     public function start():Void
     {
-        var timer = new Timer(timePerFrame);
+        var timer = new Timer(timerInterval);
         timer.run = dispatchTick;
         playing = true;
     }
