@@ -15,8 +15,8 @@ class FixedTickProvider implements ITickProvider
     public var playing(default, null):Bool;
 
     private var timer:Timer;
-    private var timePerFrame:Float = (1000.0 / 60.0) / 1000.0; // time in seconds
-    private var timerInterval:Int = Std.int(timePerFrame * 1000); // same time in ms
+    private var timePerFrame:Float; // time in seconds
+    private var timerInterval:Int; // same time in ms
     private var timeSinceLastUpdate:Float = 0;
     private var signal:Signal1<Float>;
 
